@@ -8,11 +8,14 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed = 5f; // hareket hizi
     public float rotationSpeed = 10f; // donme hizi
     private Rigidbody rb; // fizik islemleri icin rigidbodyi tanimladik
-
+    private Animator animator; // animasyon islemleri icin animatoru tanimladik.
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody>(); // ayni gameobject uzerindeki rigidbody'e
         // ulasmak icin GetComponent fonksiyonunu kullandik
+
+        animator = GetComponent<Animator>(); // animatore ulastik.
     }
 
     private void Update()
@@ -23,10 +26,17 @@ public class PlayerController : MonoBehaviour
         // 2 boyutlu olan yatay ve dikey eksenindeki girisleri 3 boyutluya cevirdik
         // x ve y ekseni uzerindeki girisleri x ve z eksenine cevirdik.
         var movementDirection = new Vector3(horizontal, 0, vertical);
-
+       
+        // movement directionum 0 degilse isRunning bool'una true ata. eger 0 ise false ata.
+        animator.SetBool("isRunning", movementDirection != Vector3.zero);
+        
+        // yukaridakinin movement directionu ile degil de rigidbodydeki hizi kullanarak yaptigimiz sey. ikisi de ayni.
+        // animator.SetBool("isRunning",rb.velocity != Vector3.zero);
+        
         if (movementDirection == Vector3.zero)
         {
-            Debug.Log("Su an input yok");
+            Debug.Log("input yok");
+            rb.velocity = Vector3.zero;
             return;
         }
         

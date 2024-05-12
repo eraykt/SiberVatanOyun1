@@ -16,7 +16,14 @@ public class TableController : MonoBehaviour
         if (player.CollectGold()) // collect gold fonksiyonum eger calistiysa
         {
             goldObject.SetActive(false); // altin objesini kapat.
-        }
             
+            // 5 ile 15 saniye arasinda rastgele bir sure icinde ReloadGold fonksiyonunu calistir.
+            Invoke(nameof(ReloadGold),Random.Range(5f,15f)); 
+        }
+    }
+
+    private void ReloadGold() // altin objesini tekrar acan fonksiyon
+    {
+        goldObject.SetActive(true); // altin objesini ac.
     }
 }

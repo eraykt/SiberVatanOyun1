@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,10 +11,14 @@ public class PlayerController : MonoBehaviour
     public List<GameObject> goldList; // karakterin elindeki altinlari tuttugumuz liste.
     public int carry; // karakterin anlik kac adet altin tasidigini tutucak olan field. 
 
+    public float reduceSpeed = 0.5f; // altin tasidikca azalacak olan hiz miktarim.
+    private float baseMovementSpeed; // oyun basladiginda karakterin sahip oldugu hareket hizi.
+    
     public int CarryLimit => goldList.Count; // tasima limitim
 
     private void Start()
     {
+        baseMovementSpeed = movementSpeed; // base hizin degerini aldik.
         rb = GetComponent<Rigidbody>(); // ayni gameobject uzerindeki rigidbody'e
         // ulasmak icin GetComponent fonksiyonunu kullandik
 
@@ -58,9 +63,26 @@ public class PlayerController : MonoBehaviour
             return false; // eger tasidigim altin sayisi tasima limitime esit ise fonksiyon false deger return etsin.
 
         // 0 1 2 -> cary degerlerimi listenin indexi olarak kullanip o indexteki altinlari aktif yaptik.
-        goldList[carry].gameObject.SetActive(true); 
+        goldList[carry].SetActive(true);
         carry++; // carry degerini 1 arttiriyoruz.
+
+        movementSpeed -= reduceSpeed; // hareket hizimi azalttim.
         
         return true; // butun islem basarili bir sekilde gerceklestigi icin true return ediyoruz.
+    }
+
+    public int LoadGoldsToTruck()
+    {
+        var carryingGold = carry; // tasidigimiz altin sayisini kopyaladik
+        if (carryingGold == 0) return 0; // eger altin tasimiyorsak ugrasma
+        
+        foreach (var gold in goldList) 
+            gold.SetActive(false); // elimizdeki butun altinlari kapattik
+        
+        carry = 0; // tasidigimiz altin sayisini 0 ladik
+        movementSpeed = baseMovementSpeed; // hareket hizimi default degere set ediyorum.
+        // movementSpeed += carryingGold * reduceSpeed; // hareket hizimi default degere set ediyorum.
+        
+        return carryingGold; // tasidigimiz altin sayisini return ettik.
     }
 }

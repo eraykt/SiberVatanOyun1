@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TruckController : MonoBehaviour
@@ -6,6 +7,8 @@ public class TruckController : MonoBehaviour
     public List<GameObject> golds; // truckta bulunacak altinlari tuttugumuz liste 
     public GameObject goldsParent; // onceden yerlestirdigimiz altinlarin parenti
     private int currentGold; // su anda acik olan altin sayisi.
+    public TextMeshProUGUI scoreText;
+    
     
     private void Start()
     {
@@ -24,6 +27,7 @@ public class TruckController : MonoBehaviour
         
         var gold = player.DropGoldsFromHand(); // playerda kac tane altin oldugunun sayisini aldik.
         currentGold += gold; // bu altinlari mevcut altin sayisina ekledik
+        scoreText.SetText("Collected Gold: " + currentGold);
 
         for (int i = 0; i < currentGold; i++)
             golds[i].SetActive(true); // sonrasinda arabadaki altinlari actim.

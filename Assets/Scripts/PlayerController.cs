@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,10 @@ public class PlayerController : MonoBehaviour
     
     public int CarryLimit => goldList.Count; // tasima limitim
 
+    public Transform boneParent; // kemiklerin parenti
+    public bool CanMove = true; // karakterim hareket edebilir mi?
+    public Transform spinePosition;
+
     private void Start()
     {
         baseMovementSpeed = movementSpeed; // base hizin degerini aldik.
@@ -22,10 +27,14 @@ public class PlayerController : MonoBehaviour
         // ulasmak icin GetComponent fonksiyonunu kullandik
 
         animator = GetComponent<Animator>(); // animatore ulastik.
+        
+        Ragdoll(false); // oyun basladiginda ragdoll kapali olacak.
     }
 
     private void Update()
     {
+        if (!CanMove) return;   // hareket boolum false ise hareket etme
+        
         float horizontal = Input.GetAxis("Horizontal"); // yatay eksende giris aldik
         var vertical = Input.GetAxis("Vertical"); // dikey eksende giris aldik
 
@@ -70,7 +79,7 @@ public class PlayerController : MonoBehaviour
         return true; // butun islem basarili bir sekilde gerceklestigi icin true return ediyoruz.
     }
 
-    public int LoadGoldsToTruck()
+    public int DropGoldsFromHand()
     {
         var carryingGold = carry; // tasidigimiz altin sayisini kopyaladik
         if (carryingGold == 0) return 0; // eger altin tasimiyorsak ugrasma
@@ -83,5 +92,35 @@ public class PlayerController : MonoBehaviour
         // movementSpeed += carryingGold * reduceSpeed; // hareket hizimi default degere set ediyorum.
         
         return carryingGold; // tasidigimiz altin sayisini return ettik.
+    }
+
+    public void Ragdoll(bool isActive)
+    {
+        animator.enabled = !isActive; // animatoru ac kapat
+
+        var colliders = boneParent.GetComponentsInChildren<Collider>(); // kemiklerdeki colliderlarin hepsine eris
+        var rigidbodies = boneParent.GetComponentsInChildren<Rigidbody>(); // kemiklerdeki rigidbodylere eris
+
+        foreach (var coll in colliders)
+            coll.enabled = isActive; 
+
+        foreach (var rig in rigidbodies)
+            rig.isKinematic = !isActive;
+
+        // rb.isKinematic = isActive;
+
+        GetComponent<Collider>().enabled = !isActive;
+        CanMove = !isActive; // ragdoll oldugu zaman hareketi engelle
+
+        if (!isActive)
+            StartCoroutine(CloseRagdoll());
+    }
+
+    public IEnumerator CloseRagdoll()
+    {
+        yield return new WaitForSeconds(5f); // 5 saniye bekle
+        Ragdoll(false); // ragdoll kapa
+        // omurganin oldugu konuma playerimi isinla. y konumu haric cunku karakterin y konumu asla degismiyor.
+        transform.position = new Vector3(spinePosition.position.x, 0, spinePosition.position.z); 
     }
 }

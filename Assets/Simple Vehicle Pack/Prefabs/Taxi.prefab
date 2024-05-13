@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4786165216473404}
   - component: {fileID: 33846728464820042}
   - component: {fileID: 23872015978594554}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Object005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 4760845229251968}
   - component: {fileID: 33183683889693866}
   - component: {fileID: 23454689495253346}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Object015
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 4652618803402950}
   - component: {fileID: 33730543002999836}
   - component: {fileID: 23008349884360502}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Object017
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 4008337089251462}
   - component: {fileID: 33375504403848472}
   - component: {fileID: 23850419312566916}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: police_car
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4870167790249810}
   - component: {fileID: 5351743607077871212}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Taxi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 4955056900105520}
   - component: {fileID: 33264542208718286}
   - component: {fileID: 23306454348383526}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Object016
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -22,7 +22,7 @@ public class TruckController : MonoBehaviour
         if (other.gameObject.tag != "Player") return; // carpisma objesinin (other) tag'ini kontrol et.
         var player = other.gameObject.GetComponent<PlayerController>(); // other objesinden karakter kontrol scriptine ulas.
         
-        var gold = player.LoadGoldsToTruck(); // playerda kac tane altin oldugunun sayisini aldik.
+        var gold = player.DropGoldsFromHand(); // playerda kac tane altin oldugunun sayisini aldik.
         currentGold += gold; // bu altinlari mevcut altin sayisina ekledik
 
         for (int i = 0; i < currentGold; i++)
